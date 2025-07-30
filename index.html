@@ -36,46 +36,52 @@
   <body>
     <h1>Coração com Pontinhos</h1>
     <script>
+      let dots = [];
+      let heartPoints = [];
+      let totalDots = 200;
+
       function setup() {
         createCanvas(400, 400);
         background(0);
-        noLoop();
 
-        drawHeart();
-        drawLines();
-        drawRandomDots();
-      }
-
-      function drawHeart() {
-        translate(width / 2, height / 2);
-        fill('red');
-        stroke('red');
-        strokeWeight(2);
-        beginShape();
-        for (let angle = 0; angle < TWO_PI; angle += 0.01) {
+        // Gera pontos da forma do coração
+        for (let angle = 0; angle < TWO_PI; angle += TWO_PI / totalDots) {
           let x = 16 * pow(sin(angle), 3);
-          let y = - (13 * cos(angle) - 5 * cos(2 * angle) - 2 * cos(3 * angle) - cos(4 * angle));
-          vertex(x * 10, y * 10);
+          let y = -(13 * cos(angle) - 5 * cos(2 * angle) - 2 * cos(3 * angle) - cos(4 * angle));
+          heartPoints.push(createVector(x * 10 + width / 2, y * 10 + height / 2));
         }
-        endShape(CLOSE);
-        resetMatrix();
+
+        // Gera pontos aleatórios
+        for (let i = 0; i < totalDots; i++) {
+          let x = random(width);
+          let y = random(height);
+          dots.push({
+            pos: createVector(x, y),
+            target: heartPoints[i],
+            size: random(2, 6)
+          });
+        }
       }
 
-      function drawLines() {
-        stroke('red');
-        strokeWeight(10);
-        line(350, 50, 270, 110);
-        line(140, 150, 80, 190);
-      }
+      function draw() {
+        background(0);
 
-      function drawRandomDots() {
         noStroke();
         fill('red');
-        for (let i = 0; i < 20; i++) {
-          let x = random(20, 380);
-          let y = random(280, 390);
-          let diameter = random(2, 20);
-          ellipse(x, y, diameter, diameter);
+        let allArrived = true;
+
+        for (let dot of dots) {
+          let dir = p5.Vector.sub(dot.target, dot.pos);
+          if (dir.mag() > 1) {
+            dir.setMag(2);
+            dot.pos.add(dir);
+            allArrived = false;
+          }
+          ellipse(dot.pos.x, dot.pos.y, dot.size);
+        }
+
+        if (allArrived) {
+          noLoop();
         }
       }
     </script>
