@@ -1,81 +1,61 @@
-import turtle as t
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Coração com Pontos</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      function setup() {
+        createCanvas(400, 400);
+        background(0);
+        drawHeart();
+        drawLines();
+        drawDots();
+      }
 
-from random import randint
+      function drawHeart() {
+        fill('red');
+        noStroke();
+        beginShape();
+        vertex(200, 240); // ponto de baixo do coração
 
-t.bgcolor('black')
+        bezierVertex(320, 120, 300, 10, 200, 80);
+        bezierVertex(100, 10, 80, 120, 200, 240);
+        endShape(CLOSE);
+      }
 
-t.shape('turtle')
+      function drawLines() {
+        stroke('red');
+        strokeWeight(10);
+        line(350, 50, 270, 110);
+        line(140, 150, 80, 190);
+      }
 
-def curve():
-
-    for i in range(200):
-
-        t.right(1)
-
-        t.fd(1)
-
-def head():
-
-    t.color('red')
-
-    t.begin_fill()
-
-    t.left(140)
-
-    t.fd(120)
-
-    curve()
-
-    t.left(125)
-
-    curve()
-
-    t.fd(120)
-
-    t.end_fill()
-
-def points(x,y,ancho):
-
-    t.up()
-
-    t.goto(x,y)
-
-    t.down()
-
-    t.dot(ancho)
-
-head()
-
-t.up()
-
-t.goto(150,150)
-
-t.pensize(10)
-
-t.hideturtle()
-
-t.color('red2')
-
-t.down()
-
-t.goto(30,110)
-
-t.up()
-
-t.goto(-60,50)
-
-t.down()
-
-t.goto(-115,15)
-
-for i in range(20):
-
-        x = randint(-10,12)
-
-        y = randint(-150,-5)
-
-        a = randint(2,20)
-
-        points(x,y,a)
-
-t.exitonclick()
+      function drawDots() {
+        noStroke();
+        for (let i = 0; i < 20; i++) {
+          let x = random(50, 350);
+          let y = random(280, 390);
+          let size = random(2, 20);
+          fill('red');
+          ellipse(x, y, size, size);
+        }
+      }
+    </script>
+  </body>
+</html>
