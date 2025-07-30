@@ -1,6 +1,6 @@
 # ❤️ Coração com Pontinhos
 
-[![Ver Online](https://img.shields.io/badge/%F0%9F%9A%80-Ver%20Online-red?style=for-the-badge)](https://seu-link-aqui.com)
+[![Ver Online](https://img.shields.io/badge/%F0%9F%9A%80-Ver%20Online-red?style=for-the-badge)](https://cora-o-theta.vercel.app/)
 
 Uma animação visual feita com [p5.js](https://p5js.org/), onde pontinhos vermelhos surgem aleatoriamente na tela e, com suavidade, se organizam até formar um coração perfeito. Um projeto de arte generativa e programação criativa, ideal para portfólios, apresentações ou páginas comemorativas.
 
@@ -8,7 +8,7 @@ Uma animação visual feita com [p5.js](https://p5js.org/), onde pontinhos verme
 
 - Cria 200 pontinhos vermelhos em posições aleatórias na tela.
 - Cada ponto se move animadamente até sua posição ideal para formar um coração.
-- O resultado é uma animação suave, charmosa e impactante.
+- Quando todos os pontos se alinham, o coração começa a pulsar suavemente.
 - Tudo é feito 100% em HTML com JS e CSS integrados — roda direto no navegador!
 
 ## 🧠 Tecnologias Utilizadas
@@ -31,14 +31,26 @@ Uma animação visual feita com [p5.js](https://p5js.org/), onde pontinhos verme
 | `index.html`   | Arquivo final completo com HTML, CSS e JavaScript integrados. Contém:     |
 |                | - Estrutura visual da página                                              |
 |                | - Estilo embutido (estética e responsividade)                            |
-|                | - Animação feita com JavaScript + p5.js                                   |
+|                | - Animação feita com JavaScript + p5.js (incluindo o pulso do coração)    |
 
-## 💡 Inspiração
+## 🚀 Ver Online
 
-Este projeto foi inspirado em um código feito originalmente com a biblioteca `turtle` em Python. A versão atual foi reestruturada totalmente para rodar na web, usando `p5.js` para oferecer uma experiência visual moderna e compatível com qualquer navegador.
+[![Ver Online](https://img.shields.io/badge/%F0%9F%9A%80-Ver%20Online-red?style=flat-square)](https://cora-o-theta.vercel.app/)
 
-## 🌐 Deploy
+> Substitua o link acima pelo URL real do seu projeto hospedado.
 
-Você pode hospedar esse projeto facilmente em:
-- [Vercel](https://cora-o-theta.vercel.app)
-- [GitHub Pages](https://pages.github.co)
+## 📷 Preview
+
+*(Coloque aqui uma imagem ou GIF da animação, se quiser)*
+
+## 🧠 Inspiração
+
+Projeto inspirado em código original feito com `turtle` em Python, totalmente refeito para a web com `p5.js`, trazendo uma experiência visual moderna, animada e responsiva.
+
+## 📄 Licença
+
+Este projeto é livre para fins educacionais, criativos e artísticos.
+
+---
+
+Feito com ❤️ e criatividade.
