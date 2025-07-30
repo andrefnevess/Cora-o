@@ -1,89 +1,99 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Coração com Pontinhos</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        background-color: black;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        color: white;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        text-align: center;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coração com Pontinhos</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+  <script>
+    let points = [];
+    let heartPoints = [];
+    let animationComplete = false;
+    let pulseScale = 1;
+    let pulseDirection = 1;
+
+    function setup() {
+      createCanvas(windowWidth, windowHeight);
+      noStroke();
+
+      // Criação dos pontos aleatórios
+      for (let i = 0; i < 200; i++) {
+        points.push({
+          x: random(width),
+          y: random(height),
+          targetX: 0,
+          targetY: 0
+        });
       }
 
-      h1 {
-        margin-bottom: 10px;
-        font-size: 2rem;
-        color: red;
-        text-shadow: 0 0 10px red;
+      // Geração das coordenadas do coração
+      for (let t = 0; t < TWO_PI; t += 0.05) {
+        let x = 16 * pow(sin(t), 3);
+        let y = - (13 * cos(t) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t));
+        heartPoints.push({ x: x, y: y });
       }
 
-      canvas {
-        display: block;
-        border: 2px solid red;
-        box-shadow: 0 0 15px red;
+      // Escalando o coração e definindo alvos dos pontos
+      let scaleFactor = min(width, height) / 40;
+      for (let i = 0; i < points.length; i++) {
+        let h = heartPoints[i % heartPoints.length];
+        points[i].targetX = width / 2 + h.x * scaleFactor;
+        points[i].targetY = height / 2 + h.y * scaleFactor;
       }
-    </style>
-  </head>
-  <body>
-    <h1>Coração com Pontinhos</h1>
-    <script>
-      let dots = [];
-      let heartPoints = [];
-      let totalDots = 200;
+    }
 
-      function setup() {
-        createCanvas(400, 400);
-        background(0);
+    function draw() {
+      background(0);
+      fill(255, 0, 0);
 
-        // Gera pontos da forma do coração
-        for (let angle = 0; angle < TWO_PI; angle += TWO_PI / totalDots) {
-          let x = 16 * pow(sin(angle), 3);
-          let y = -(13 * cos(angle) - 5 * cos(2 * angle) - 2 * cos(3 * angle) - cos(4 * angle));
-          heartPoints.push(createVector(x * 10 + width / 2, y * 10 + height / 2));
+      animationComplete = true;
+
+      for (let i = 0; i < points.length; i++) {
+        let p = points[i];
+        let dx = p.targetX - p.x;
+        let dy = p.targetY - p.y;
+
+        if (abs(dx) > 0.1 || abs(dy) > 0.1) {
+          p.x += dx * 0.05;
+          p.y += dy * 0.05;
+          animationComplete = false;
         }
 
-        // Gera pontos aleatórios
-        for (let i = 0; i < totalDots; i++) {
-          let x = random(width);
-          let y = random(height);
-          dots.push({
-            pos: createVector(x, y),
-            target: heartPoints[i],
-            size: random(2, 6)
-          });
+        // Aplica o "pulso" se a animação tiver terminado
+        let px = p.x;
+        let py = p.y;
+        if (animationComplete) {
+          px = width/2 + (p.x - width/2) * pulseScale;
+          py = height/2 + (p.y - height/2) * pulseScale;
         }
+
+        ellipse(px, py, 6);
       }
 
-      function draw() {
-        background(0);
-
-        noStroke();
-        fill('red');
-        let allArrived = true;
-
-        for (let dot of dots) {
-          let dir = p5.Vector.sub(dot.target, dot.pos);
-          if (dir.mag() > 1) {
-            dir.setMag(2);
-            dot.pos.add(dir);
-            allArrived = false;
-          }
-          ellipse(dot.pos.x, dot.pos.y, dot.size);
-        }
-
-        if (allArrived) {
-          noLoop();
+      // Lógica do pulso
+      if (animationComplete) {
+        pulseScale += pulseDirection * 0.005;
+        if (pulseScale > 1.05 || pulseScale < 0.95) {
+          pulseDirection *= -1;
         }
       }
-    </script>
-  </body>
+    }
+
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+    }
+  </script>
+</body>
 </html>
