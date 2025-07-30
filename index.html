@@ -1,42 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
-    <title>Coração com Pontos</title>
+    <title>Coração com Pontinhos</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
     <style>
       body {
         margin: 0;
+        padding: 0;
         background-color: black;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: white;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 100vh;
+        text-align: center;
       }
+
+      h1 {
+        margin-bottom: 10px;
+        font-size: 2rem;
+        color: red;
+        text-shadow: 0 0 10px red;
+      }
+
       canvas {
         display: block;
+        border: 2px solid red;
+        box-shadow: 0 0 15px red;
       }
     </style>
   </head>
   <body>
+    <h1>Coração com Pontinhos</h1>
     <script>
       function setup() {
         createCanvas(400, 400);
         background(0);
+        noLoop();
+
         drawHeart();
         drawLines();
-        drawDots();
+        drawRandomDots();
       }
 
       function drawHeart() {
+        translate(width / 2, height / 2);
         fill('red');
-        noStroke();
+        stroke('red');
+        strokeWeight(2);
         beginShape();
-        vertex(200, 240); // ponto de baixo do coração
-
-        bezierVertex(320, 120, 300, 10, 200, 80);
-        bezierVertex(100, 10, 80, 120, 200, 240);
+        for (let angle = 0; angle < TWO_PI; angle += 0.01) {
+          let x = 16 * pow(sin(angle), 3);
+          let y = - (13 * cos(angle) - 5 * cos(2 * angle) - 2 * cos(3 * angle) - cos(4 * angle));
+          vertex(x * 10, y * 10);
+        }
         endShape(CLOSE);
+        resetMatrix();
       }
 
       function drawLines() {
@@ -46,14 +68,14 @@
         line(140, 150, 80, 190);
       }
 
-      function drawDots() {
+      function drawRandomDots() {
         noStroke();
+        fill('red');
         for (let i = 0; i < 20; i++) {
-          let x = random(50, 350);
+          let x = random(20, 380);
           let y = random(280, 390);
-          let size = random(2, 20);
-          fill('red');
-          ellipse(x, y, size, size);
+          let diameter = random(2, 20);
+          ellipse(x, y, diameter, diameter);
         }
       }
     </script>
