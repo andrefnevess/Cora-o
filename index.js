@@ -1,3 +1,9 @@
-const inputItem = document.getElementById("input-item")
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  background(0);
+  noLoop();
 
-console.log(inputItem.value);
+  drawHeart();
+  drawLines();
+  drawRandomDots();
+}
