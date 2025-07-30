@@ -85,6 +85,13 @@
     function windowResized() {
       resizeCanvas(windowWidth, windowHeight);
     }
+    function mousePressed() {
+  if (!soundStarted) {
+    document.getElementById('heartSound').play();
+    soundStarted = true;
+  }
+}
+
   </script>
 </body>
 </html>
