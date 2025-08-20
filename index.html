@@ -1,122 +1,77 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coração com Pontinhos</title>
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js"></script>
+  <title>Coração Verde</title>
   <style>
     :root {
-      --verde-claro: #38A169;
-      --verde-medio: #1B6B4F;
-      --verde-escuro: #0B3D2E;
-      --branco: #FFFFFF;
+      --verde-escuro: #014626;
+      --verde-claro: #00aa55;
+      --verde-gradiente: linear-gradient(135deg, #014626, #00aa55);
+
+      --texto-claro: #f0fdf4;
+      --texto-secundario: #a7f3d0;
+
+      --cor-destaque: #55DE16; 
+      --cor-fundo-escuro: #014626; 
+      --cor-texto-escuro: #ffffff; 
     }
 
     body {
       margin: 0;
-      background: linear-gradient(135deg, var(--verde-escuro), black);
-      overflow: hidden;
+      padding: 0;
+      background: var(--verde-gradiente);
+      height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
-      color: var(--branco);
+      justify-content: center;
+      overflow: hidden;
+      font-family: "Poppins", sans-serif;
     }
 
-    canvas {
-      filter: drop-shadow(0 0 10px var(--verde-claro));
-      transition: transform 0.3s ease;
+    .container {
+      text-align: center;
+      color: var(--texto-claro);
+      position: relative;
     }
 
-    canvas:hover {
-      transform: scale(1.05);
-      filter: drop-shadow(0 0 20px var(--verde-medio));
+    .heart {
+      font-size: 5rem;
+      color: white;
+      position: absolute;
+      right: -40px; /* coração saindo da tela */
+      top: 50%;
+      transform: translateY(-50%);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: translateY(-50%) scale(1);
+      }
+      50% {
+        transform: translateY(-50%) scale(1.2);
+      }
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin: 0;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: var(--texto-secundario);
+      margin-top: 0.5rem;
     }
   </style>
 </head>
 <body>
-  <audio id="heartSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_519894f366.mp3?filename=heartbeat-strong-6893.mp3" preload="auto" loop></audio>
-  <script>
-    let points = [];
-    let heart = [];
-    let totalPoints = 800;
-    let progress = 0;
-    let animationSpeed = 0.01;
-    let pulseScale = 1;
-    let pulseDirection = 1;
-    let soundStarted = false;
-
-    function setup() {
-      createCanvas(windowWidth, windowHeight);
-      for (let i = 0; i < totalPoints; i++) {
-        points.push({
-          x: random(width),
-          y: random(height),
-          tx: 0,
-          ty: 0,
-        });
-      }
-
-      for (let i = 0; i < totalPoints; i++) {
-        let angle = map(i, 0, totalPoints, 0, TWO_PI);
-        let x = 16 * pow(sin(angle), 3);
-        let y = -(13 * cos(angle) - 5 * cos(2 * angle) - 2 * cos(3 * angle) - cos(4 * angle));
-        x *= 20;
-        y *= 20;
-        x += width / 2;
-        y += height / 2;
-        heart.push({ x, y });
-      }
-    }
-
-    function draw() {
-      background(0, 50); // fundo mais "translúcido" cria rastro bonito
-      noStroke();
-      
-      // gradiente fake com mudança de cor
-      let c1 = color(56, 161, 105); // verde claro
-      let c2 = color(255); // branco
-      fill(lerpColor(c1, c2, sin(frameCount * 0.02) * 0.5 + 0.5));
-
-      progress = min(progress + animationSpeed, 1);
-
-      for (let i = 0; i < totalPoints; i++) {
-        let px = lerp(points[i].x, heart[i].x, progress);
-        let py = lerp(points[i].y, heart[i].y, progress);
-
-        if (progress >= 1) {
-          px = heart[i].x + random(-1, 1) * pulseScale;
-          py = heart[i].y + random(-1, 1) * pulseScale;
-        }
-
-        ellipse(px, py, 4, 4);
-      }
-
-      // animação de pulsar
-      if (progress >= 1) {
-        pulseScale += 0.05 * pulseDirection;
-        if (pulseScale > 2 || pulseScale < 1) {
-          pulseDirection *= -1;
-        }
-
-        // inicia som
-        if (!soundStarted) {
-          document.getElementById('heartSound').play();
-          soundStarted = true;
-        }
-      }
-    }
-
-    function windowResized() {
-      resizeCanvas(windowWidth, windowHeight);
-    }
-
-    function mousePressed() {
-      if (!soundStarted) {
-        document.getElementById('heartSound').play();
-        soundStarted = true;
-      }
-    }
-  </script>
+  <div class="container">
+    <h1>Amor que Transborda</h1>
+    <p>Um coração verde cheio de vida 🌱</p>
+    <div class="heart">❤️</div>
+  </div>
 </body>
 </html>
