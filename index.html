@@ -6,10 +6,31 @@
   <title>Coração com Pontinhos</title>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js"></script>
   <style>
+    :root {
+      --verde-claro: #38A169;
+      --verde-medio: #1B6B4F;
+      --verde-escuro: #0B3D2E;
+      --branco: #FFFFFF;
+    }
+
     body {
       margin: 0;
-      background-color: black;
+      background: linear-gradient(135deg, var(--verde-escuro), black);
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--branco);
+    }
+
+    canvas {
+      filter: drop-shadow(0 0 10px var(--verde-claro));
+      transition: transform 0.3s ease;
+    }
+
+    canvas:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 20px var(--verde-medio));
     }
   </style>
 </head>
@@ -49,9 +70,13 @@
     }
 
     function draw() {
-      background(0);
+      background(0, 50); // fundo mais "translúcido" cria rastro bonito
       noStroke();
-      fill(255, 0, 100);
+      
+      // gradiente fake com mudança de cor
+      let c1 = color(56, 161, 105); // verde claro
+      let c2 = color(255); // branco
+      fill(lerpColor(c1, c2, sin(frameCount * 0.02) * 0.5 + 0.5));
 
       progress = min(progress + animationSpeed, 1);
 
@@ -67,14 +92,14 @@
         ellipse(px, py, 4, 4);
       }
 
-      // Animação de pulsar
+      // animação de pulsar
       if (progress >= 1) {
         pulseScale += 0.05 * pulseDirection;
         if (pulseScale > 2 || pulseScale < 1) {
           pulseDirection *= -1;
         }
 
-        // Inicia som
+        // inicia som
         if (!soundStarted) {
           document.getElementById('heartSound').play();
           soundStarted = true;
@@ -85,13 +110,13 @@
     function windowResized() {
       resizeCanvas(windowWidth, windowHeight);
     }
-    function mousePressed() {
-  if (!soundStarted) {
-    document.getElementById('heartSound').play();
-    soundStarted = true;
-  }
-}
 
+    function mousePressed() {
+      if (!soundStarted) {
+        document.getElementById('heartSound').play();
+        soundStarted = true;
+      }
+    }
   </script>
 </body>
 </html>
